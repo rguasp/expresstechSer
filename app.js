@@ -9,8 +9,8 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 
-console.log("hi I made this change - rafael");
 
+console.log('blah');
 
 mongoose.Promise = Promise;
 mongoose
