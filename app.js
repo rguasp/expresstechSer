@@ -11,7 +11,7 @@ const path         = require('path');
 
 console.log("hi I made this change - rafael");
 
-
+console.log("rafael")
 mongoose.Promise = Promise;
 mongoose
   .connect('mongodb://localhost/finalproject', {useMongoClient: true})
