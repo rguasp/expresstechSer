@@ -1,14 +1,5 @@
 require('dotenv').config();
 
-
-const bodyParser   = require('body-parser');
-const cookieParser = require('cookie-parser');
-const express      = require('express');
-const favicon      = require('serve-favicon');
-const hbs          = require('hbs');
-const mongoose     = require('mongoose');
-const logger       = require('morgan');
-const path         = require('path');
 const bodyParser     = require('body-parser');
 const cookieParser   = require('cookie-parser');
 const express        = require('express');
@@ -26,6 +17,7 @@ const app            = express();
 const flash          = require("connect-flash");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const cors           = require("cors");
+
 
 mongoose.Promise = Promise;
 mongoose
