@@ -1,4 +1,6 @@
 require('dotenv').config();
+
+<<<<<<< HEAD
 const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express      = require('express');
@@ -8,6 +10,14 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 
+
+
+console.log('blah');
+
+
+console.log("rafael")
+
+=======
 const bodyParser     = require('body-parser');
 const cookieParser   = require('cookie-parser');
 const express        = require('express');
@@ -26,6 +36,8 @@ const flash          = require("connect-flash");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const cors           = require("cors");
 
+
+>>>>>>> c094e4b566f5f7bf79204f3a138dc3ff1087d2e1
 mongoose.Promise = Promise;
 mongoose
   .connect('mongodb://localhost/finalproject', {useMongoClient: true})
