@@ -10,7 +10,12 @@ const userSchema = new Schema({
   email:    {type: String, unique: true},
   img:      {data: Buffer, contentType: String},
   bio:      {type: String},
-  balance:  {type: Number}
+  balance:  {type: Number},
+  role: {
+    type: String,
+    enum : ['GUEST', 'ADMIN'],
+    default : 'GUEST'
+  }
 }, {
   timestamps: {
     createdAt: "created_at",
