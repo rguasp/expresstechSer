@@ -138,4 +138,6 @@ authRoutes.get("/auth/google/callback", passport.authenticate("google", {
   successRedirect: "/private-page"
 }));
 
+
+
 module.exports = authRoutes;
