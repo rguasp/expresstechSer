@@ -10,7 +10,7 @@ const logger         = require('morgan');
 const path           = require('path');
 const User           = require('./models/user');
 const session        = require("express-session");
-const bcrypt         = require("bcryptjs");
+const bcrypt         = require("bcrypt");
 const passport       = require("passport");
 const LocalStrategy  = require("passport-local").Strategy;
 const app            = express();
@@ -46,11 +46,6 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 
-app.use(session({
-  secret: "our-passport-local-strategy-app",
-  resave: true,
-  saveUninitialized: true
-}));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -86,7 +81,7 @@ passport.use(new LocalStrategy({
     if (!bcrypt.compareSync(password, user.password)) {
       return next(null, false, { message: "Incorrect password" });
     }
-
+    
     return next(null, user);
   });
 }));
@@ -105,11 +100,11 @@ passport.use(new GoogleStrategy({
     if (user) {
       return done(null, user);
     }
-
+    
     const newUser = new User({
       googleID: profile.id
     });
-
+    
     newUser.save((err) => {
       if (err) {
         return done(err);
@@ -117,11 +112,16 @@ passport.use(new GoogleStrategy({
       done(null, newUser);
     });
   });
-
+  
 }));
 // end passport config area
 
 
+app.use(session({
+  secret: "our-passport-local-strategy-app",
+  resave: true,
+  saveUninitialized: true
+}));
 
 
 app.use(passport.initialize());
