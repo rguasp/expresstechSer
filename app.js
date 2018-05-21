@@ -18,7 +18,7 @@ const flash          = require("connect-flash");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const cors           = require("cors");
 
-console.log("Hello");
+
 mongoose.Promise = Promise;
 mongoose
   .connect('mongodb://localhost/finalproject', {useMongoClient: true})
