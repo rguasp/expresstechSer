@@ -131,8 +131,10 @@ app.use(cors());
 
 const index = require('./routes/index');
 app.use('/', index);
-const authRouteVariableThing = require('./routes/auth-routes')
+const authRouteVariableThing = require('./routes/auth-routes');
 app.use('/api', authRouteVariableThing);
-
+const services = require('./routes/service');
+app.use('/service', services);
 
 module.exports = app;
+
