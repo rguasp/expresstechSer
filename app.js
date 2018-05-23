@@ -139,5 +139,8 @@ app.use('/api', authRouteVariableThing);
 const services = require('./routes/service');
 app.use('/services', services);
 
+const reviews = require('./routes/review-routes');
+app.use('/reviews', reviews);
+
 module.exports = app;
 
