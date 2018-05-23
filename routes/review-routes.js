@@ -1,6 +1,6 @@
 const express = require('express');
 const router  = express.Router();
-const Service = require('../models/review');
+const Review = require('../models/review');
 
 /* GET home page */
 router.get('/reviews', (req, res, next) => {
