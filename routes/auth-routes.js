@@ -90,10 +90,6 @@ authRoutes.delete("/logout", (req, res) => {
   
   req.logout();
   req.session.destroy();
-  // res.cookie("express.sid", "", {expires: new Date()});
-  // delete this.req.session;
-  // req.session = null;
-  // req.session = {}
   res.status(200).json({ message: 'Success' });
 });
 

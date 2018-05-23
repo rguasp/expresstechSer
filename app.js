@@ -39,18 +39,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Express View engine setup
-
 app.use(require('node-sass-middleware')({
   src:  path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
   sourceMap: true
 }));
 
-
+// Handlebars middleware
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
+
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
@@ -87,7 +87,7 @@ passport.use(new LocalStrategy({
 }));
 
 
-
+//Passport middleware
 passport.use(new GoogleStrategy({
   clientID: "client ID here",
   clientSecret: "client secret here",
@@ -132,11 +132,16 @@ app.use(cors({
   origin: ['http://localhost:4200'] // these are the domains allowed
 }));
 
-
+//Default Route
 const index = require('./routes/index');
 app.use('/', index);
-const authRouteVariableThing = require('./routes/auth-routes')
+
+//User Authorization Routes
+const authRouteVariableThing = require('./routes/auth-routes');
 app.use('/api', authRouteVariableThing);
 
+const services = require('./routes/service');
+app.use('/services', services);
 
 module.exports = app;
+
