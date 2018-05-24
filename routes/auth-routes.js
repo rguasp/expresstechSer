@@ -86,6 +86,7 @@ authRoutes.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+
 authRoutes.get('/userdata', isLoggedIn, function(req, res) {
   User.findById(req.user, function(err, fulluser){
     if (err) throw err;
@@ -93,7 +94,8 @@ authRoutes.get('/userdata', isLoggedIn, function(req, res) {
   })
 })
 
-authRoutes.post("/logout", (req, res) => {
+
+authRoutes.delete("/logout", (req, res) => {
   req.logout();
   res.status(200).json({ message: 'Success' });
 });
