@@ -87,6 +87,7 @@ authRoutes.post('/login', (req, res, next) => {
 });
 
 
+
 authRoutes.get('/userdata', isLoggedIn, function(req, res) {
   User.findById(req.user, function(err, fulluser){
     if (err) throw err;
@@ -97,13 +98,14 @@ authRoutes.get('/userdata', isLoggedIn, function(req, res) {
 
 authRoutes.delete("/logout", (req, res) => {
   req.logout();
+  req.session.destroy();
   res.status(200).json({ message: 'Success' });
 });
 
 
 
-
 authRoutes.get('/loggedin', (req, res, next) => {
+  console.log("logged in user in the backend route: ", req.user)
   if (req.isAuthenticated()) {
     res.status(200).json(req.user);
     return;
@@ -112,6 +114,14 @@ authRoutes.get('/loggedin', (req, res, next) => {
 });
 
 
+
+function isLoggedIn(req, res , next) {
+  if (req.isAuthenticated()){
+    next();
+  }else {
+    res.json(false);
+  }
+}
 
 
 function ensureAuthenticated(req, res, next) {
@@ -149,6 +159,8 @@ authRoutes.get('/private', (req, res, next) => {
   res.status(403).json({ message: 'Unauthorized' });
 });
 
+ 
+
 authRoutes.get("/auth/google", passport.authenticate("google", {
   scope: ["https://www.googleapis.com/auth/plus.login",
           "https://www.googleapis.com/auth/plus.profile.emails.read"]
@@ -157,7 +169,7 @@ authRoutes.get("/auth/google", passport.authenticate("google", {
 authRoutes.get("/auth/google/callback", passport.authenticate("google", {
   failureRedirect: "/",
   successRedirect: "/private-page"
-}));
+}));  
 
 
 
