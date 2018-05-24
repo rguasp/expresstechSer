@@ -88,12 +88,12 @@ authRoutes.post('/login', (req, res, next) => {
 
 
 
-authRoutes.get('/userdata', isLoggedIn, function(req, res) {
-  User.findById(req.user, function(err, fulluser){
-    if (err) throw err;
-    res.json(fulluser);
-  })
-})
+// authRoutes.get('/userdata', isLoggedIn, function(req, res) {
+//   User.findById(req.user, function(err, fulluser){
+//     if (err) throw err;
+//     res.json(fulluser);
+//   })
+// })
 
 
 authRoutes.delete("/logout", (req, res) => {
