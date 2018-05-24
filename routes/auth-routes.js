@@ -86,10 +86,22 @@ authRoutes.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+
+authRoutes.get('/userdata', isLoggedIn, function(req, res) {
+  User.findById(req.user, function(err, fulluser){
+    if (err) throw err;
+    res.json(fulluser);
+  })
+})
+
+
 authRoutes.delete("/logout", (req, res) => {
   req.logout();
   res.status(200).json({ message: 'Success' });
 });
+
+
+
 
 authRoutes.get('/loggedin', (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -98,6 +110,9 @@ authRoutes.get('/loggedin', (req, res, next) => {
   }
   res.status(403).json({ message: 'Unauthorized' });
 });
+
+
+
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -115,6 +130,14 @@ function checkRoles(role) {
     } else {
       res.redirect('/')
     }
+  }
+}
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  }else {
+    res.json(false);
   }
 }
 
