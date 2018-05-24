@@ -115,14 +115,6 @@ authRoutes.get('/loggedin', (req, res, next) => {
 
 
 
-function isLoggedIn(req, res , next) {
-  if (req.isAuthenticated()){
-    next();
-  }else {
-    res.json(false);
-  }
-}
-
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
