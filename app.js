@@ -126,7 +126,10 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
+app.use(cors({
+  credentials: true, //allow sending cookies
+  origin: ['http://localhost:4200'] //These are the domains allowed
+}));
 
 //Default Route
 const index = require('./routes/index');
