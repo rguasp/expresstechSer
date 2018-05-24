@@ -127,8 +127,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-  credentials: true, //allow sending cookies
-  origin: ['http://localhost:4200'] //These are the domains allowed
+  credentials: true, // allow sending of cookies
+  origin:['http://localhost:4200'] // these are the domains allowed
 }));
 
 //Default Route
