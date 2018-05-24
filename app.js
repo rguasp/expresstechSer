@@ -127,6 +127,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use(cors({
   credentials: true, // allow sending cookies
   origin: ['http://localhost:4200'] // these are the domains allowed
@@ -142,6 +143,9 @@ app.use('/api', authRouteVariableThing);
 
 const services = require('./routes/service');
 app.use('/services', services);
+
+const reviews = require('./routes/review-routes');
+app.use('/reviews', reviews);
 
 module.exports = app;
 
