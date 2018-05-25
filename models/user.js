@@ -8,6 +8,7 @@ const userSchema = new Schema({
   img:      {data: Buffer, contentType: String},
   bio:      {type: String},
   balance:  {type: Number},
+  cart:     {type: Array},
   role: {
     type: String,
     enum : ['GUEST', 'ADMIN'],
