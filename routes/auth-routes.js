@@ -3,6 +3,7 @@ const authRoutes  = express.Router();
 const passport    = require("passport");
 // User model
 const User        = require("../models/user");
+const Cart        = require("../models/cart");
 const flash       = require("connect-flash");
 const ensureLogin = require("connect-ensure-login");
 
@@ -19,6 +20,7 @@ const bcryptSalt = 10;
 authRoutes.post("/signup", (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
+  const currentCart = req.body.cart;
   const email = req.body.email;
 
   if (username === "" || password === "" || email === "" ) {
@@ -119,7 +121,8 @@ function ensureAuthenticated(req, res, next) {
     return next();
   } else {
 
-    res.redirect('/login')
+    // res.redirect('/login')
+    res.status(403).json({ message: 'Unauthorized' });
   }
 }
 
@@ -128,7 +131,8 @@ function checkRoles(role) {
     if (req.isAuthenticated() && req.user.role === role) {
       return next();
     } else {
-      res.redirect('/')
+      // res.redirect('/')
+      res.status(403).json({ message: 'Unauthorized' });
     }
   }
 }
@@ -141,12 +145,62 @@ function isLoggedIn(req, res, next) {
   }
 }
 
+// function addToCart(req, res, next) {
+//   return function(req, res, next) {
+//     if (req.isAuthenticated() && req.user.role === role) {
+//       return next();
+//     } else {
+//       res.redirect('/')
+//     }
+//   }
+//   }
+
+
 authRoutes.get('/private', (req, res, next) => {
   if (req.isAuthenticated()) {
     res.json({ message: 'This is a private message' });
     return;
   }
   res.status(403).json({ message: 'Unauthorized' });
+});
+
+
+
+authRoutes.get('/cart', (req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.json({
+       cart: req.body.cart
+       });
+    return;
+  }
+  res.status(403).json({ message: 'Unauthorized' });
+});
+
+authRoutes.post('/cart/create', (req, res, next) => {
+  if (req.isAuthenticated()) {
+    console.log("req dot user >>>>>>>>>>>>>>>>>>>>>>>>>>>>", req.user);
+    User.findById(req.user._id)
+    .then((userFromDB) => {
+      console.log("user from DB =================================", userFromDB);
+      const userCart = {
+        name: req.body.name,
+        content: req.body.content,
+        price: req.body.price
+      }
+    userFromDB.cart.push(userCart);
+      console.log("user info after the push +++++++++++++++++++++++++++++++", userFromDB)
+      userFromDB.save()
+      console.log("user info after the save %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", userFromDB)
+      res.json(userFromDB);
+    })
+    // .then((userFromDb) => {
+    //   console.log("2nd user from DB ??????????????????????????????", userFromDB);
+    // })   
+    .catch((err) => {
+      res.status(403).json({ message: 'Unauthorized' });
+    return;
+  })
+  }
 });
 
  
@@ -157,8 +211,8 @@ authRoutes.get("/auth/google", passport.authenticate("google", {
 }));
 
 authRoutes.get("/auth/google/callback", passport.authenticate("google", {
-  failureRedirect: "/",
-  successRedirect: "/private-page"
+  // failureRedirect: "/",
+  // successRedirect: "/private-page"
 }));  
 
 
