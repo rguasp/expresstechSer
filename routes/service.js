@@ -22,42 +22,36 @@ router.post('/services/create', (req, res, next)=>{
       name: req.body.name,
       description: req.body.description
     }
-  // Task.create(req.body) would work too
+  // Service.create(req.body) would work too
     Service.create(newService)
     .then((serviceJustCreated)=>{
+      // console.log(serviceJustCreated)
       res.json(serviceJustCreated)
     })
     .catch((err)=>{
       res.json(err)
     })
-
   });
 
 
-  
+router.post('/services/delete/:id', (req, res, next)=>{
+      Service.findByIdAndRemove(req.params.id)
+      .then((serviceJustDeleted)=>{
+        res.json(serviceJustDeleted)
+      })
+      .catch((err)=>{
+        res.json(err)
+      })
+    })
 
-
-    // router.post('/task/delete/:id', (req, res, next)=>{
-    //   Service.findByIdAndRemove(req.params.id)
-    //   .then((taskJustDeleted)=>{
-    //     res.json(taskJustDeleted)
-    //   })
-    //   .catch((err)=>{
-    //     res.json(err)
-    //   })
-
-    // })
-
-    // router.post('/task/update/:id', (req, res, next)=>{
-    //   console.log(req.body)
-    //   Service.findByIdAndUpdate(req.params.id, req.body)
-    //   .then((updatedTask)=>{
-    //     res.json(updatedTask)
-    //   })
-    //   .catch((err)=>{
-    //     res.json(err)
-    //   })
-
-    // })
+router.post('/services/update/:id', (req, res, next)=>{
+      Service.findByIdAndUpdate(req.params.id, req.body)
+      .then((updatedService)=>{
+        res.json(updatedService)
+      })
+      .catch((err)=>{
+        res.json(err)
+      })
+    })
 
 module.exports = router;

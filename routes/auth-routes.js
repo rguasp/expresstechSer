@@ -149,7 +149,7 @@ authRoutes.get('/private', (req, res, next) => {
   res.status(403).json({ message: 'Unauthorized' });
 });
 
- 
+
 
 authRoutes.get("/auth/google", passport.authenticate("google", {
   scope: ["https://www.googleapis.com/auth/plus.login",
