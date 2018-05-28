@@ -2,7 +2,7 @@ const express = require('express');
 const router  = express.Router();
 const Service = require('../models/service');
 const User = require('../models/user');
-
+const upload = require('../configs/multer');
 
 /* GET home page */
 router.get('/services', (req, res, next) => {
@@ -16,16 +16,16 @@ router.get('/services', (req, res, next) => {
 });
 
 //add a NEW task
-router.post('/services/create', (req, res, next)=>{
+router.post('/services/create', upload.single('file'), (req, res, next)=>{
   console.log(req.body);
     const newService = {
       name: req.body.name,
-      description: req.body.description
+      description: req.body.description,
+      img: `/uploads/${req.file.filename}`
     }
   // Service.create(req.body) would work too
     Service.create(newService)
     .then((serviceJustCreated)=>{
-      // console.log(serviceJustCreated)
       res.json(serviceJustCreated)
     })
     .catch((err)=>{
