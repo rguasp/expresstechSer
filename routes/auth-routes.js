@@ -176,7 +176,16 @@ authRoutes.get('/cart', (req, res, next) => {
   res.status(403).json({ message: 'Unauthorized' });
 });
 
-authRoutes.post('/cart/create', (req, res, next) => {
+authRoutes.get('/cart/:id', (req, res, next) => {
+  if (req.isAuthenticated()) {
+    User.findById(req.user, function(err, fulluser){
+    res.json(fulluser);
+  })
+  }
+  if (err) throw err;
+})
+
+authRoutes.post('/cart/:id/create', (req, res, next) => {
   if (req.isAuthenticated()) {
     console.log("req dot user >>>>>>>>>>>>>>>>>>>>>>>>>>>>", req.user);
     User.findById(req.user._id)
@@ -184,8 +193,8 @@ authRoutes.post('/cart/create', (req, res, next) => {
       console.log("user from DB =================================", userFromDB);
       const userCart = {
         name: req.body.name,
-        content: req.body.content,
-        price: req.body.price
+        // content: req.body.content,
+        // price: req.body.price
       }
     userFromDB.cart.push(userCart);
       console.log("user info after the push +++++++++++++++++++++++++++++++", userFromDB)
