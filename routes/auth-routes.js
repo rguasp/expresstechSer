@@ -6,6 +6,13 @@ const User        = require("../models/user");
 const Cart        = require("../models/cart");
 const flash       = require("connect-flash");
 const ensureLogin = require("connect-ensure-login");
+
+const Service = require('../models/service');
+
+
+
+
+
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
@@ -133,15 +140,15 @@ function isLoggedIn(req, res, next) {
   }
 }
 
-// function addToCart(req, res, next) {
-//   return function(req, res, next) {
-//     if (req.isAuthenticated() && req.user.role === role) {
-//       return next();
-//     } else {
-//       res.redirect('/')
-//     }
-//   }
-//   }
+function addToCart(req, res, next) {
+  return function(req, res, next) {
+    if (req.isAuthenticated() && req.user.role === role) {
+      return next();
+    } else {
+      res.redirect('/')
+    }
+  }
+  }
 
 
 authRoutes.get('/private', (req, res, next) => {
@@ -166,38 +173,26 @@ authRoutes.get('/cart', (req, res, next) => {
 authRoutes.get('/cart/:id', (req, res, next) => {
   if (req.isAuthenticated()) {
     User.findById(req.user, function(err, fulluser){
-    res.json(fulluser);
+    res.json(fulluser.cart);
   })
   }
   if (err) throw err;
 })
 
-authRoutes.post('/cart/:id/create', (req, res, next) => {
-  if (req.isAuthenticated()) {
-    console.log("req dot user >>>>>>>>>>>>>>>>>>>>>>>>>>>>", req.user);
-    User.findById(req.user._id)
-    .then((userFromDB) => {
-      console.log("user from DB =================================", userFromDB);
-      const userCart = {
-        name: req.body.name,
-        // content: req.body.content,
-        // price: req.body.price
-      }
-    userFromDB.cart.push(userCart);
-      console.log("user info after the push +++++++++++++++++++++++++++++++", userFromDB)
-      userFromDB.save()
-      console.log("user info after the save %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", userFromDB)
-      res.json(userFromDB);
-    })
-    // .then((userFromDb) => {
-    //   console.log("2nd user from DB ??????????????????????????????", userFromDB);
-    // })   
-    .catch((err) => {
-      res.status(403).json({ message: 'Unauthorized' });
-    return;
+
+
+authRoutes.put('/cart/:id/add', (req, res, next) => {
+  console.log('user info on put to cart +===========', req.user);
+  req.user.cart.unshift(req.params.id);
+  req.user.save()
+  .then(() => {
+    console.log('req user info after the then of the put to cart >>>>>><<<<<<<<<<<', req. user);
+    res.json(req.user)
   })
-  }
-});
+  .catch((err) => { 
+    res.json(err)
+  })
+})
 
  
 

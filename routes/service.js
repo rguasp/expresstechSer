@@ -15,7 +15,7 @@ router.get('/services', (req, res, next) => {
   })
 });
 
-//add a NEW task
+//add a NEW service
 router.post('/services/create', (req, res, next)=>{
   console.log(req.body);
     const newService = {
@@ -25,14 +25,26 @@ router.post('/services/create', (req, res, next)=>{
       // img: `/uploads/${req.file.filename}`
     }
   // Service.create(req.body) would work too
-    Service.create(newService)
-    .then((serviceJustCreated)=>{
-      res.json(serviceJustCreated)
-    })
-    .catch((err)=>{
-      res.json(err)
-    })
-  });
+
+  Service.create(newService)
+  .then((serviceJustCreated)=>{
+    res.json(serviceJustCreated)
+  })
+  .catch((err)=>{
+    res.json(err)
+  })
+
+});
+
+// router.get('/services/:id', (req, res, next) => {
+//     Service.create(newService)
+//     .then((serviceJustCreated)=>{
+//       res.json(serviceJustCreated)
+//     })
+//     .catch((err)=>{
+//       res.json(err)
+//     })
+//   });
 
   router.get('/services/:id', (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -41,6 +53,32 @@ router.post('/services/create', (req, res, next)=>{
   })
   }
   if (err) throw err;
+})
+
+router.put('/cart/:id/add', (req, res, next) => {
+  console.log('user service on put to cart +===========', req.user);
+  req.user.cart.unshift(req.params.id);
+  req.user.save()
+  .then(() => {
+    console.log('req user info after the then of the put to cart >>>>>><<<<<<<<<<<', req. user);
+    res.json(req.user)
+  })
+  .catch((err) => { 
+    res.json(err)
+  })
+})
+
+
+
+router.get('/userCart', (req, res, next) => {
+  Service.find({_id: req.user.cart})
+  .exec()
+  .then((serviceResults) => {
+    res.json(serviceResults)
+  })
+  .catch((err) => {
+    res.json(err)
+  })
 })
 
 
