@@ -34,6 +34,15 @@ router.post('/services/create', (req, res, next)=>{
     })
   });
 
+  router.get('/services/:id', (req, res, next) => {
+  if (req.isAuthenticated()) {
+    User.findById(req.user, function(err, fulluser){
+    res.json(fulluser);
+  })
+  }
+  if (err) throw err;
+})
+
 
 router.post('/services/delete/:id', (req, res, next)=>{
       Service.findByIdAndRemove(req.params.id)
