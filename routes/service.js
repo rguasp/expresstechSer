@@ -16,12 +16,13 @@ router.get('/services', (req, res, next) => {
 });
 
 //add a NEW task
-router.post('/services/create', upload.single('file'), (req, res, next)=>{
+router.post('/services/create', (req, res, next)=>{
   console.log(req.body);
     const newService = {
       name: req.body.name,
       description: req.body.description,
-      img: `/uploads/${req.file.filename}`
+      price: req.body.price,
+      // img: `/uploads/${req.file.filename}`
     }
   // Service.create(req.body) would work too
     Service.create(newService)
