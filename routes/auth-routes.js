@@ -6,7 +6,10 @@ const User        = require("../models/user");
 const Cart        = require("../models/cart");
 const flash       = require("connect-flash");
 const ensureLogin = require("connect-ensure-login");
+
 const Service = require('../models/service');
+
+
 
 
 
@@ -14,15 +17,13 @@ const Service = require('../models/service');
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
-// authRoutes.get("/signup", (req, res, next) => {
-//   res.render("auth/signup");
-// });
 
 authRoutes.post("/signup", (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
   const currentCart = req.body.cart;
   const email = req.body.email;
+  const bio = req.body.bio;
 
   if (username === "" || password === "" || email === "" ) {
     res.status(400).json({ message: 'Provide valid Username, Password, or Email' });
@@ -41,7 +42,8 @@ authRoutes.post("/signup", (req, res, next) => {
     const newUser = new User({
       username:username,
       password: hashPass,
-      email:email
+      email:email,
+      bio:bio
     });
 
     newUser.save((err) => {
@@ -61,9 +63,6 @@ authRoutes.post("/signup", (req, res, next) => {
 });
 
 
-// authRoutes.get("/login", (req, res, next) => {
-//   res.render("auth/login", { "message": req.flash("error") });
-// });
 
 authRoutes.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, theUser, failureDetails) => {
@@ -91,12 +90,7 @@ authRoutes.post('/login', (req, res, next) => {
 
 
 
-// authRoutes.get('/userdata', isLoggedIn, function(req, res) {
-//   User.findById(req.user, function(err, fulluser){
-//     if (err) throw err;
-//     res.json(fulluser);
-//   })
-// })
+
 
 
 authRoutes.delete("/logout", (req, res) => {
@@ -166,7 +160,6 @@ authRoutes.get('/private', (req, res, next) => {
 });
 
 
-
 authRoutes.get('/cart', (req, res, next) => {
   if (req.isAuthenticated()) {
     res.json({
@@ -202,6 +195,7 @@ authRoutes.put('/cart/:id/add', (req, res, next) => {
 })
 
  
+
 
 authRoutes.get("/auth/google", passport.authenticate("google", {
   scope: ["https://www.googleapis.com/auth/plus.login",
