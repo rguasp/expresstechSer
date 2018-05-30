@@ -1,27 +1,13 @@
 const express     = require("express");
 const authRoutes  = express.Router();
 const passport    = require("passport");
-// User model
-const User        = require("../models/user");
-const Cart        = require("../models/cart");
 const flash       = require("connect-flash");
 const ensureLogin = require("connect-ensure-login");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> dfcc033cba09334d52b6d380d2086f3f62e012b9
+const User        = require("../models/user");
+const Cart        = require("../models/cart");
 const Service = require('../models/service');
 
-
-
-<<<<<<< HEAD
-=======
->>>>>>> 4622ebdfd186bf8f34c3b46c2ffd2decda05d4c2
-=======
-
-
->>>>>>> dfcc033cba09334d52b6d380d2086f3f62e012b9
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
@@ -168,17 +154,19 @@ authRoutes.get('/private', (req, res, next) => {
   res.status(403).json({ message: 'Unauthorized' });
 });
 
-
+// // API/CART using 
 authRoutes.get('/cart', (req, res, next) => {
   if (req.isAuthenticated()) {
-    res.json({
-       cart: req.body.cart
-       });
-    return;
+    User.findById(req.user, function(err, fulluser){
+      console.log("are you getting this far?")
+    res.json(fulluser.cart);
+  })
   }
   res.status(403).json({ message: 'Unauthorized' });
 });
 
+
+// //FOR USER CART PAGE // CART COMPONENT
 authRoutes.get('/cart/:id', (req, res, next) => {
   if (req.isAuthenticated()) {
     User.findById(req.user, function(err, fulluser){
@@ -189,7 +177,7 @@ authRoutes.get('/cart/:id', (req, res, next) => {
 })
 
 
-
+// //ROUTE 
 authRoutes.put('/cart/:id/add', (req, res, next) => {
   console.log('user info on put to cart +===========', req.user);
   req.user.cart.unshift(req.params.id);

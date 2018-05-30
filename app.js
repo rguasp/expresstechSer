@@ -8,7 +8,6 @@ const hbs            = require('hbs');
 const mongoose       = require('mongoose');
 const logger         = require('morgan');
 const path           = require('path');
-const User           = require('./models/user');
 const session        = require("express-session");
 const bcrypt         = require("bcrypt");
 const passport       = require("passport");
@@ -17,6 +16,8 @@ const app            = express();
 const flash          = require("connect-flash");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const cors           = require("cors");
+const User           = require('./models/user');
+// const Cart           = require('./models/cart');
 
 
 mongoose.Promise = Promise;
@@ -141,11 +142,17 @@ app.use('/', index);
 const authRouteVariableThing = require('./routes/auth-routes');
 app.use('/api', authRouteVariableThing);
 
+//Tech Services Route
 const services = require('./routes/service');
 app.use('/services', services);
 
+//User Reviews Route
 const reviews = require('./routes/review-routes');
 app.use('/reviews', reviews);
+
+//User Shopping Cart Route
+const cart = require('./routes/cart-routes');
+app.use('/cart', cart);
 
 module.exports = app;
 

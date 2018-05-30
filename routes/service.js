@@ -2,7 +2,7 @@ const express = require('express');
 const router  = express.Router();
 const Service = require('../models/service');
 const User = require('../models/user');
-const upload = require('../configs/multer');
+// const upload = require('../configs/multer');
 
 /* GET home page */
 router.get('/services', (req, res, next) => {
@@ -25,11 +25,6 @@ router.post('/services/create', (req, res, next)=>{
       // img: `/uploads/${req.file.filename}`
     }
   // Service.create(req.body) would work too
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> dfcc033cba09334d52b6d380d2086f3f62e012b9
   Service.create(newService)
   .then((serviceJustCreated)=>{
     res.json(serviceJustCreated)
@@ -40,21 +35,42 @@ router.post('/services/create', (req, res, next)=>{
 
 });
 
-<<<<<<< HEAD
-router.get('/services/:id', (req, res, next) => {
-=======
-    Service.create(newService)
-    .then((serviceJustCreated)=>{
-      res.json(serviceJustCreated)
-    })
-    .catch((err)=>{
-      res.json(err)
-    })
-  });
+router.get('/services/cart', (req, res, next) => {
+  Service.find({_id: req.user.cart})
+  .exec()
+  .then((serviceResults) => {
+    res.json(serviceResults)
+  })
+  .catch((err) => {
+    res.json(err)
+  })
+})
 
-  router.get('/services/:id', (req, res, next) => {
->>>>>>> 4622ebdfd186bf8f34c3b46c2ffd2decda05d4c2
-=======
+
+
+router.post('/services/add', (req, res, next)=>{
+  // console.log(req.body);
+  console.log("got this far");
+    const itemToAdd = {
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      // img: `/uploads/${req.file.filename}`
+    }
+  // Service.create(req.body) would work too
+
+
+  Service.cart.push(itemToAdd)
+  .then((serviceJustAdded)=>{
+    res.json(serviceJustAdded)
+  })
+  .catch((err)=>{
+    res.json(err)
+  })
+
+});
+
+
 // router.get('/services/:id', (req, res, next) => {
 //     Service.create(newService)
 //     .then((serviceJustCreated)=>{
@@ -66,7 +82,6 @@ router.get('/services/:id', (req, res, next) => {
 //   });
 
   router.get('/services/:id', (req, res, next) => {
->>>>>>> dfcc033cba09334d52b6d380d2086f3f62e012b9
   if (req.isAuthenticated()) {
     User.findById(req.user, function(err, fulluser){
     res.json(fulluser);
@@ -100,6 +115,7 @@ router.get('/userCart', (req, res, next) => {
     res.json(err)
   })
 })
+
 
 
 router.post('/services/delete/:id', (req, res, next)=>{
