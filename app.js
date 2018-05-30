@@ -21,12 +21,19 @@ const cors           = require("cors");
 
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/finalproject', {useMongoClient: true})
+  .connect(process.env.MONGODB_URI, { useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
   }).catch(err => {
     console.error('Error connecting to mongo', err)
   });
+  // mongoose
+  // .connect('mongodb://localhost/finalproject', {useMongoClient: true})
+  // .then(() => {
+  //   console.log('Connected to Mongo!')
+  // }).catch(err => {
+  //   console.error('Error connecting to mongo', err)
+  // });
 
 const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
@@ -133,6 +140,7 @@ app.use(cors({
   origin: ['http://localhost:4200'] // these are the domains allowed
 }));
 
+
 //Default Route
 const index = require('./routes/index');
 app.use('/', index);
@@ -146,6 +154,13 @@ app.use('/services', services);
 
 const reviews = require('./routes/review-routes');
 app.use('/reviews', reviews);
+
+
+// ======= For Heroku =======
+app.use((req, res ,next) =>{
+  res.sendfile(_dirname + '/public/dist/index.html');
+})
+// =========================
 
 module.exports = app;
 
