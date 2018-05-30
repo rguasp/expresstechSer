@@ -41,14 +41,11 @@ server.on('error', error => {
   }
 });
 
-// server.listen(process.env.PORT || 3000, () => {
-//   console.log(`Listening on http://localhost:${process.env.PORT}`);
-// });
+server.listen(process.env.PORT || 3000, () => {
+  console.log(`Listening on http://localhost:${process.env.PORT}`);
+});
 
 
 // var port = normalizePort(process.env.PORT || '3000' );
 // app.set('port, port');
 
-server.listen(process.env.PORT || 3000, () => {
-  console.log(`Listening on http://localhost:${process.env.PORT}`);
-});
