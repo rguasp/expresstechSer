@@ -158,7 +158,7 @@ app.use('/reviews', reviews);
 
 // ======= For Heroku =======
 app.use((req, res ,next) =>{
-  res.sendfile(_dirname + '/public/dist/index.html');
+  res.sendfile(_dirname + '/public/index.html');
 })
 // =========================
 
