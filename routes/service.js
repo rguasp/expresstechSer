@@ -34,14 +34,16 @@ router.post('/services/create', (req, res, next)=>{
     })
   });
 
+  //==single item
   router.get('/services/:id', (req, res, next) => {
-  if (req.isAuthenticated()) {
-    User.findById(req.user, function(err, fulluser){
-    res.json(fulluser);
+    Service.findById(req.params.id)
+    .then((oneService)=>{
+      res.json(oneService)
+    })
+    .catch((err)=>{
+      res.json(err)
+    })
   })
-  }
-  if (err) throw err;
-})
 
 
 router.post('/services/delete/:id', (req, res, next)=>{

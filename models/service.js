@@ -10,7 +10,7 @@ const serviceSchema = new Schema({
   },
   price:    {type: Number},
   //We can store the pics we will display for each service
-  img:      {data: Buffer, contentType: String},
+  img:      {type: String, default: "../assets/images/comp2.png"},
   ///****This property will be important for determining prices? May need to be altered */
   duration:      {type: Number},
   balance:  {type: Number},
