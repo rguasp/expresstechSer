@@ -10,9 +10,12 @@ let app = require('../app');
 //   res.render('not-found');
 // });
 
+
+
 // app.use((err, req, res, next) => {
 //   // always log the error
 //   console.error('ERROR', req.method, req.path, err);
+
 
 //   // only render if the error ocurred before sending the response
 //   if (!res.headersSent) {
@@ -20,6 +23,7 @@ let app = require('../app');
 //     res.render('error');
 //   }
 // });
+
 
 let server = http.createServer(app);
 
