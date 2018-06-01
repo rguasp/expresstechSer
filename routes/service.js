@@ -23,7 +23,7 @@ router.post('/services/create', (req, res, next)=>{
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
-      // img: `/uploads/${req.file.filename}`
+      img: req.body.img
     }
   // Service.create(req.body) would work too
   Service.create(newService)
@@ -60,8 +60,7 @@ router.post('/services/add', (req, res, next)=>{
   if (req.isAuthenticated()) {
     User.findById(req.user, function(err, fulluser){
     res.json(fulluser);
-  if (err) throw err;
-  })
+  });
   }
 })
 
