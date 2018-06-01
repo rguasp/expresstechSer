@@ -85,36 +85,50 @@ router.post('/services/add', (req, res, next)=>{
   if (req.isAuthenticated()) {
     User.findById(req.user, function(err, fulluser){
     res.json(fulluser);
+  if (err) throw err;
   })
   }
-  if (err) throw err;
 })
 
-router.put('/cart/:id/add', (req, res, next) => {
-  console.log('user service on put to cart +===========', req.user);
-  req.user.cart.unshift(req.params.id);
-  req.user.save()
-  .then(() => {
-    console.log('req user info after the then of the put to cart >>>>>><<<<<<<<<<<', req. user);
-    res.json(req.user)
-  })
-  .catch((err) => { 
-    res.json(err)
-  })
-})
+// router.put('/cart/:id/add', (req, res, next) => {
+//   console.log('user service on put to cart +===========', req.user);
+//   req.user.cart.unshift(req.params.id);
+//   req.user.save()
+//   .then(() => {
+//     console.log('req user info after the then of the put to cart >>>>>><<<<<<<<<<<', req. user);
+//     res.json(req.user)
+//   })
+//   .catch((err) => { 
+//     res.json(err)
+//   })
+// })
 
 
 
-router.get('/userCart', (req, res, next) => {
-  Service.find({_id: req.user.cart})
-  .exec()
-  .then((serviceResults) => {
-    res.json(serviceResults)
-  })
-  .catch((err) => {
-    res.json(err)
-  })
-})
+// router.put('/cart/:id/add', (req, res, next) => {
+//   console.log('user service on put to cart +===========', req.user);
+//   req.user.cart.unshift(req.params);
+//   req.user.save()
+//   .then(() => {
+//     console.log('req user info after the then of the put to cart >>>>>><<<<<<<<<<<', req. user);
+//     res.json(req.user)
+//   })
+//   .catch((err) => { 
+//     res.json(err)
+//   })
+// })
+
+
+// router.get('/services/userCart', (req, res, next) => {
+//   Service.find({_id: req.user.cart})
+//   .exec()
+//   .then((serviceResults) => {
+//     res.json(serviceResults)
+//   })
+//   .catch((err) => {
+//     res.json(err)
+//   })
+// })
 
 
 

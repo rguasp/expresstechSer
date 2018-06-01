@@ -9,7 +9,9 @@ const userSchema = new Schema({
   bio:      {type: String},
   balance:  {type: Number},
   cart:     [
-    {type: Schema.Types.ObjectId}
+    {type: Schema.Types.ObjectId,
+      ref: 'Service',
+    }
     ],
   role: {
     type: String,

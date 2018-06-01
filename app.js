@@ -148,11 +148,11 @@ app.use('/services', services);
 
 //User Reviews Route
 const reviews = require('./routes/review-routes');
-app.use('/reviews', reviews);
+app.use('/', reviews);
 
 //User Shopping Cart Route
 const cart = require('./routes/cart-routes');
-app.use('/cart', cart);
+app.use('/', cart);
 
 module.exports = app;
 

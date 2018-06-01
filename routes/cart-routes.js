@@ -6,22 +6,22 @@ const Cart = require('../models/cart');
 
 
 /* GET home page */
-router.get('/cart', (req, res, next) => {
-  if (req.isAuthenticated()) {
-    res.json({ cart: req.user.cart})
-    return;
-  }
-  res.status(403).json({ message: 'Unauthorized' });
-});
+// router.get('/cart', (req, res, next) => {
+//   if (req.isAuthenticated()) {
+//     res.json({ cart: req.user.cart})
+//     return;
+//   }
+//   res.status(403).json({ message: 'Unauthorized' });
+// });
 
-router.get('/cart/:id', (req, res, next) => {
-    if (req.isAuthenticated()) {
-        User.find({_id: req.user.id})
-        .then((userCart) => {
-            res.json(req.user.cart);
-        })
-    }
-})
+// router.get('/cart/total', (req, res, next) => {
+//     if (req.isAuthenticated()) {
+//         User.find({_id: req.user.id})
+//         .then((userCart) => {
+//             res.json(req.user.cart);
+//         })
+//     }
+// })
 
 // router.post('/cart/:id/add', (req, res, next) => {
 //   console.log('user service on put to cart +===========', req.user);
