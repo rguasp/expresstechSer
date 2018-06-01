@@ -56,9 +56,21 @@ router.post('/services/delete/:id', (req, res, next)=>{
       })
     })
 
-router.post('/services/update/:id', (req, res, next)=>{
-      Service.findByIdAndUpdate(req.params.id, req.body)
+router.post('/services/update/:id', (req, res, next)=> {
+  console.log("INSIDE OF EXPRESS == /services/update/:id =====>>>> 🤢🤢🤢🤢🤢🤢🤢🤢🤢🤢🤢")
+  
+  const theSelectedObjectId = req.params.id;
+    console.log(typeof theSelectedObjectId);
+
+  // console.log("===================🤲🤲🤲🤲🤲🤲🤲🤲🤲🤲🤲")
+  // var dog =  theSelectedObject.split(',');
+  // console.log(typeof dog);
+  // console.log(dog);
+
+      Service.findByIdAndUpdate(theSelectedObjectId, req.body)
       .then((updatedService)=>{
+        console.log("===================👻👻👻👻👻👻👻👻👻👻👻👻👻👻")
+        console.log(updatedService);
         res.json(updatedService)
       })
       .catch((err)=>{
