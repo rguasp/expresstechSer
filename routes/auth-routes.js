@@ -176,49 +176,83 @@ authRoutes.get('/private', (req, res, next) => {
 //========  getUserCart() ==============
 
 
-authRoutes.get('/theCart/:id', (req, res, next) => {
+// authRoutes.get('/theCart/:id', (req, res, next) => {
 
-  //create an empty array 
-  // const itemsInTheList = ['run', 'dog'];
-  //d a foreach loop on req.user.cart
+//   const cartArray = [];
 
-  // [req.params.id].forEach(function(element) {
+//   //create an empty array 
+//   // const itemsInTheList = ['run', 'dog'];
+//   //d a foreach loop on req.user.cart
 
-    // if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-     var myArray = req.params.id;
-    //  JSON.parse(myArray);
+//   // [req.params.id].forEach(function(element) {
 
-     console.log('ARRAY LENGTH !!!!!!')
-     console.log(myArray)
-      console.log(typeof myArray)
-     console.log(myArray.length)
+//     // if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+//      var myArray = req.params.id;
+//     //  JSON.parse(myArray);
 
-     console.log("===============XXXXXXXX============")
+//      console.log('ARRAY LENGTH !!!!!!')
+//      console.log(myArray)
+//       console.log(typeof myArray)
+//      console.log(myArray.length)
 
-     var resultArray = myArray.split(',');
+//      console.log("===============XXXXXXXX============")
 
-
-   console.log('result LENGTH !!!!!!')
-     console.log(resultArray)
-      console.log(typeof resultArray)
-     console.log(resultArray.length)
+//      var resultArray = myArray.split(',');
 
 
-console.log("===============$$$$$$$$$$$$$============")
+//    console.log('result LENGTH !!!!!!')
+//      console.log(resultArray)
+//       console.log(typeof resultArray)
+//      console.log(resultArray.length)
 
 
-     const map1 = resultArray.map(oneServiceModel_Id => { 
+// console.log("===============$$$$$$$$$$$$$============")
 
-        Service.findById(oneServiceModel_Id)
-          .then((somethang) => {
-            console.log(typeof oneServiceModel_Id)
-            console.log(oneServiceModel_Id)
-              console.log("========>>>> 🤢")
-              console.log(somethang)
-          })
+// // req.user.cart.save(function(error) {
+// //   if(!error) {
+// //     Service.find({})
+// //     .populate('cart.name')
+// //     .exec(function(error, theCart) {
+// //       console.log(JSON.stringify(theCart, null, "\t"))
+// //     })
+// //   }
+// // })
 
-     });
+
+//      const map1 = resultArray.map(oneServiceModel_Id => { 
+
+//         Service.findById(oneServiceModel_Id)
+//         .exec()
+//           .then((somethang) => {
+//             console.log(typeof oneServiceModel_Id)
+//             console.log(oneServiceModel_Id)
+//               console.log("========>>>> 🤢")
+//               console.log(somethang)
+//               this.cartArray = oneServiceModel_Id;
+//               res.status(200).json(somethang);
+//           })
+//           .catch((err) => {
+//             res.status(500).json(err);
+//           })
+//           // console.log(this.cartArray)
+
+//      });
      
+authRoutes.get('/cart', (req, res, next) => {
+  Service.find({_id: req.user.cart})
+  .exec()
+  .then((merchandiseFromDb) => {
+    console.log()
+    res.status(200).json(merchandiseFromDb)
+  })
+  .catch((err) => {
+    res.status(500).json(err)
+  })
+})
+
+
+
+
     //  mongoose.Types.ObjectId(oneServiceModel_Id)
 //     for(let i=0; i <= 5; i++ ) {
 // // console.log(i)
@@ -266,8 +300,8 @@ console.log("===============$$$$$$$$$$$$$============")
   // then res.json that array
 
 
-console.log("======================== 🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`😇 ")
-console.log(req.params.id);
+// console.log("======================== 🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`😇 ")
+// console.log(req.params.id);
 
 
 // console.log("???????????????")
@@ -277,12 +311,8 @@ console.log(req.params.id);
 
 // console.log(util.inspect(req.params.id, {showHidden: true, depth: null}))
 
-console.log("???????????????111111111")
+// console.log("???????????????111111111")
 
-
-
-  
-  
   
     // res.status(200).json(this.itemsInTheList);
 
@@ -294,7 +324,7 @@ console.log("???????????????111111111")
   // })
   // }
   // res.status(403).json({ message: 'Unauthorized' });
-});
+// });
 
 
 
@@ -329,7 +359,7 @@ authRoutes.put('/cart/:id/add', (req, res, next) => {
   .catch((err) => { 
     res.json(err)
   })
-})
+});
 
 
 
@@ -373,3 +403,4 @@ authRoutes.get("/auth/google/callback", passport.authenticate("google", {
 
 
 module.exports = authRoutes;
+

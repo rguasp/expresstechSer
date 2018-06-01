@@ -17,9 +17,8 @@ const flash          = require("connect-flash");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const cors           = require("cors");
 const User           = require('./models/user');
-// const Cart           = require('./models/cart');
 
-
+// Mongo Connect
 mongoose.Promise = Promise;
 mongoose
   .connect('mongodb://localhost/finalproject', {useMongoClient: true})
@@ -39,12 +38,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
 // Express View engine setup
 app.use(require('node-sass-middleware')({
   src:  path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
   sourceMap: true
 }));
+
 
 // Handlebars middleware
 app.set('views', path.join(__dirname, 'views'));
@@ -57,7 +58,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 app.use(flash());
 
-//passport config area
+//Passport Middleware
 passport.serializeUser((user, cb) => {
   cb(null, user._id);
 });
@@ -82,7 +83,6 @@ passport.use(new LocalStrategy({
     if (!bcrypt.compareSync(password, user.password)) {
       return next(null, false, { message: "Incorrect password" });
     }
-    
     return next(null, user);
   });
 }));

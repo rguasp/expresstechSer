@@ -10,7 +10,6 @@ const userSchema = new Schema({
   balance:  {type: Number},
   cart:     [
     {type: Schema.Types.ObjectId,
-      ref: 'Service',
     }
     ],
   role: {
