@@ -56,13 +56,18 @@ router.post('/services/add', (req, res, next)=>{
 
 });
 
+  //==single item
   router.get('/services/:id', (req, res, next) => {
-  if (req.isAuthenticated()) {
-    User.findById(req.user, function(err, fulluser){
-    res.json(fulluser);
-  });
-  }
-})
+
+    Service.findById(req.params.id)
+    .then((oneService)=>{
+      res.json(oneService)
+    })
+    .catch((err)=>{
+      res.json(err)
+    })
+  })
+
 
 
 router.post('/services/delete/:id', (req, res, next)=>{
@@ -75,9 +80,21 @@ router.post('/services/delete/:id', (req, res, next)=>{
       })
     })
 
-router.post('/services/update/:id', (req, res, next)=>{
-      Service.findByIdAndUpdate(req.params.id, req.body)
+router.post('/services/update/:id', (req, res, next)=> {
+  console.log("INSIDE OF EXPRESS == /services/update/:id =====>>>> 🤢🤢🤢🤢🤢🤢🤢🤢🤢🤢🤢")
+  
+  const theSelectedObjectId = req.params.id;
+    console.log(typeof theSelectedObjectId);
+
+  // console.log("===================🤲🤲🤲🤲🤲🤲🤲🤲🤲🤲🤲")
+  // var dog =  theSelectedObject.split(',');
+  // console.log(typeof dog);
+  // console.log(dog);
+
+      Service.findByIdAndUpdate(theSelectedObjectId, req.body)
       .then((updatedService)=>{
+        console.log("===================👻👻👻👻👻👻👻👻👻👻👻👻👻👻")
+        console.log(updatedService);
         res.json(updatedService)
       })
       .catch((err)=>{
