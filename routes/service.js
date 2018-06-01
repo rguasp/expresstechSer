@@ -2,9 +2,9 @@ const express = require('express');
 const router  = express.Router();
 const Service = require('../models/service');
 const User = require('../models/user');
-const upload = require('../configs/multer');
+// const upload = require('../configs/multer');
 
-/* GET home page */
+/* GET Services page */
 router.get('/services', (req, res, next) => {
   Service.find()
   .then((list) => {
@@ -15,27 +15,50 @@ router.get('/services', (req, res, next) => {
   })
 });
 
-//add a NEW task
+
+//Add a NEW service
 router.post('/services/create', (req, res, next)=>{
   console.log(req.body);
     const newService = {
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
-      // img: `/uploads/${req.file.filename}`
+      img: req.body.img
     }
   // Service.create(req.body) would work too
-    Service.create(newService)
-    .then((serviceJustCreated)=>{
-      res.json(serviceJustCreated)
-    })
-    .catch((err)=>{
-      res.json(err)
-    })
-  });
+  Service.create(newService)
+  .then((serviceJustCreated)=>{
+    res.json(serviceJustCreated)
+  })
+  .catch((err)=>{
+    res.json(err)
+  })
+
+});
+
+
+router.post('/services/add', (req, res, next)=>{
+  // console.log(req.body);
+  console.log("got this far");
+    const itemToAdd = {
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      // img: `/uploads/${req.file.filename}`
+    }
+  Service.cart.push(itemToAdd)
+  .then((serviceJustAdded)=>{
+    res.json(serviceJustAdded)
+  })
+  .catch((err)=>{
+    res.json(err)
+  })
+
+});
 
   //==single item
   router.get('/services/:id', (req, res, next) => {
+
     Service.findById(req.params.id)
     .then((oneService)=>{
       res.json(oneService)
@@ -44,6 +67,7 @@ router.post('/services/create', (req, res, next)=>{
       res.json(err)
     })
   })
+
 
 
 router.post('/services/delete/:id', (req, res, next)=>{
