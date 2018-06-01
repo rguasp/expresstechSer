@@ -3,10 +3,12 @@ const authRoutes  = express.Router();
 const passport    = require("passport");
 const flash       = require("connect-flash");
 const ensureLogin = require("connect-ensure-login");
-const mongoose       = require('mongoose');
+const mongoose    = require('mongoose');
+
+// Models
 const User        = require("../models/user");
 const Cart        = require("../models/cart");
-const Service = require('../models/service');
+const Service     = require('../models/service');
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
@@ -86,10 +88,6 @@ authRoutes.post('/login', (req, res, next) => {
 });
 
 
-
-
-
-
 authRoutes.delete("/logout", (req, res) => {
   req.logout();
   req.session.destroy();
@@ -109,6 +107,10 @@ authRoutes.get('/loggedin', (req, res, next) => {
 });
 
 
+
+
+
+//BACKEND FUNCTIONS#########################
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -146,98 +148,13 @@ function addToCart(req, res, next) {
       res.redirect('/')
     }
   }
-  }
-
-
-authRoutes.get('/private', (req, res, next) => {
-  if (req.isAuthenticated()) {
-    res.json({ message: 'This is a private message' });
-    return;
-  }
-  res.status(403).json({ message: 'Unauthorized' });
-});
+}
+//BACKEND FUNCTIONS#########################
 
 
 
-
-
-// Service.findById(mongoose.Types.ObjectId("5b031aa09e8578f2c2447cd6"))
-
-
-// var array1 = [1, 4, 9, 16];
-
-// // pass a function to map
-// const map1 = array1.map(x => x * 2);
-
-// console.log(map1);
-// // expected output: Array [2, 8, 18, 32]
-
-// Service.findById(mongoose.Types.ObjectId(oneServiceModel_Id))
-//========  getUserCart() ==============
-
-
-// authRoutes.get('/theCart/:id', (req, res, next) => {
-
-//   const cartArray = [];
-
-//   //create an empty array 
-//   // const itemsInTheList = ['run', 'dog'];
-//   //d a foreach loop on req.user.cart
-
-//   // [req.params.id].forEach(function(element) {
-
-//     // if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-//      var myArray = req.params.id;
-//     //  JSON.parse(myArray);
-
-//      console.log('ARRAY LENGTH !!!!!!')
-//      console.log(myArray)
-//       console.log(typeof myArray)
-//      console.log(myArray.length)
-
-//      console.log("===============XXXXXXXX============")
-
-//      var resultArray = myArray.split(',');
-
-
-//    console.log('result LENGTH !!!!!!')
-//      console.log(resultArray)
-//       console.log(typeof resultArray)
-//      console.log(resultArray.length)
-
-
-// console.log("===============$$$$$$$$$$$$$============")
-
-// // req.user.cart.save(function(error) {
-// //   if(!error) {
-// //     Service.find({})
-// //     .populate('cart.name')
-// //     .exec(function(error, theCart) {
-// //       console.log(JSON.stringify(theCart, null, "\t"))
-// //     })
-// //   }
-// // })
-
-
-//      const map1 = resultArray.map(oneServiceModel_Id => { 
-
-//         Service.findById(oneServiceModel_Id)
-//         .exec()
-//           .then((somethang) => {
-//             console.log(typeof oneServiceModel_Id)
-//             console.log(oneServiceModel_Id)
-//               console.log("========>>>> 🤢")
-//               console.log(somethang)
-//               this.cartArray = oneServiceModel_Id;
-//               res.status(200).json(somethang);
-//           })
-//           .catch((err) => {
-//             res.status(500).json(err);
-//           })
-//           // console.log(this.cartArray)
-
-//      });
      
+//DISPLAYS CART CONTENTS
 authRoutes.get('/cart', (req, res, next) => {
   Service.find({_id: req.user.cart})
   .exec()
@@ -249,104 +166,12 @@ authRoutes.get('/cart', (req, res, next) => {
     res.status(500).json(err)
   })
 })
+//DISPLAYS CART CONTENTS
 
 
 
 
-    //  mongoose.Types.ObjectId(oneServiceModel_Id)
-//     for(let i=0; i <= 5; i++ ) {
-// // console.log(i)
-//     }
-
-
-// console.log(typeof oneServiceModel_Id)
-// console.log("------------------")
-
-//         Service.findById(oneServiceModel_Id)
-//           .then((somethang) => {
-//             console.log(typeof oneServiceModel_Id)
-//             console.log(oneServiceModel_Id)
-//               console.log("========>>>> 🤢")
-//               console.log(somethang)
-//           })
-     
-//      });
-
-
-
-    //  req.params.id.forEach(function(obj) {
-    //    Service.findOne({_id: this.obj.id}) {
-    //      this.id.push(this.idInCart)
-    //    }
-    //  });
-
-// console.log('MAP MAP MAP MAP ============== OUTSIDE ')
-//      console.log(map1);
-
-
-
-// }
-
-
-
-    // }
-  //   // for each one of those ids, do a Service.findById and push the 
-  //   //resulting service into the empty array you just created 
-  //   this.itemsInTheList.unshift(element);
-  // console.log("========>>>> 🤢")
-  // console.log(element)
-// });
-
-  // then res.json that array
-
-
-// console.log("======================== 🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`🎉`😇 ")
-// console.log(req.params.id);
-
-
-// console.log("???????????????")
-// console.log(`${JSON.stringify(req.params.id)}`);
-
-// const util = require('util')
-
-// console.log(util.inspect(req.params.id, {showHidden: true, depth: null}))
-
-// console.log("???????????????111111111")
-
-  
-    // res.status(200).json(this.itemsInTheList);
-
-
-  // if (req.isAuthenticated()) {
-  //   User.findById(req.user, function(err, user){
-  //     console.log("are you getting this far?")
-  //   res.json(user);
-  // })
-  // }
-  // res.status(403).json({ message: 'Unauthorized' });
-// });
-
-
-
-
-
-
-
-// //FOR USER CART PAGE // CART COMPONENT
-// authRoutes.get('/cart/:id', (req, res, next) => {
-//   console.log('============Express Cart Route======cart/id====')
-//   if (req.isAuthenticated()) {
-//     User.findById(req.user, function(err, fulluser){
-//     res.json(fulluser.cart);
-//   })
-//   }
-//   if (err) throw err;
-// })
-
-
-
-
-//======== addToCart() ==============
+//ADD TO CART PROPERTY
 
 authRoutes.put('/cart/:id/add', (req, res, next) => {
   console.log('user info on put to cart +===========', req.user);
@@ -360,36 +185,11 @@ authRoutes.put('/cart/:id/add', (req, res, next) => {
     res.json(err)
   })
 });
+//ADD TO CART PROPERTY
 
 
 
-//Called from AddToCart button in service.html page.
-//ROUTE 
-// authRoutes.get('/cart', (req, res, next) => {
-//   // console.log('user info on put to cart +===========', req.user.cart);
-//   console.log('============Express Cart Route======req user====')
-//   console.log(req.user)
-//   if (req.isAuthenticated()) {
-//     Service.findById(req.user, function(err, fulluser){
-//       // console.log("fulluser?:", fulluser.cart)
-//     // res.json(fulluser.cart);
-//     res.json(fulluser);
-
-//   })
-//   }
-//   res.status(403).json({ message: 'Unauthorized' });
-// });
-
-//     res.json(req.user.cart)
-//   if (err) {
-//     res.json({message: "Nothing in the cart"});
-//   }
-// })
-
-
- 
-
-
+//GOOGLE API SIGN IN FOR FUTURE USE
 authRoutes.get("/auth/google", passport.authenticate("google", {
   scope: ["https://www.googleapis.com/auth/plus.login",
           "https://www.googleapis.com/auth/plus.profile.emails.read"]
@@ -398,7 +198,8 @@ authRoutes.get("/auth/google", passport.authenticate("google", {
 authRoutes.get("/auth/google/callback", passport.authenticate("google", {
   // failureRedirect: "/",
   // successRedirect: "/private-page"
-}));  
+})); 
+//GOOGLE API SIGN IN FOR FUTURE USE 
 
 
 
