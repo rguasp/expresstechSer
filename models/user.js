@@ -8,10 +8,15 @@ const userSchema = new Schema({
   img:      {type: String, default: "../assets/images/nerd.png"},
   bio:      {type: String},
   balance:  {type: Number},
+<<<<<<< HEAD
+  cart:     {type: Array},
+  reviews:  {type: String},
+=======
   cart:     [
     {type: Schema.Types.ObjectId,
     }
     ],
+>>>>>>> f01a5149a8d83a13507dfa21c0e8bb8d81be1dc4
   role: {
     type: String,
     enum : ['GUEST', 'ADMIN'],
